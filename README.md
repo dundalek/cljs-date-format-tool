@@ -1,6 +1,8 @@
-# date-format
+# Date Format Tool
 
-A [re-frame](https://github.com/Day8/re-frame) application designed to ... well, that part is up to you.
+This tool lets you create date formatting strings for [Moment.js](http://momentjs.com/docs/#/displaying/) using a natural example instead of looking up placeholder characters in a documentation.
+
+It is written in ClojureScript using [re-frame](https://github.com/Day8/re-frame).
 
 ## Development Mode
 
