@@ -16,10 +16,19 @@
        (conj out (x "key"))]
       :default (recur t))))
 
+(defn twelve-hour-heuristic [tokens]
+  (if (some #(or (= % "a") (= % "A")) tokens)
+    (map #(cond
+           (= % "H") "h"
+           (= % "HH") "hh"
+           :default %)
+        tokens)
+    tokens))
+
 (defn guesstimate [input]
   (loop [[s res] [input []]]
      (if (empty? s)
-        (apply str res)
+        (apply str (twelve-hour-heuristic res))
         (recur (find-match s res)))))
 
 ; (guesstimate "03.02.1994 07:08")
