@@ -1,8 +1,21 @@
 (ns date-format.subs
-    (:require-macros [reagent.ratom :refer [reaction]])
-    (:require [re-frame.core :as re-frame]))
+  (:require-macros [reagent.ratom :refer [reaction]])
+  (:require [re-frame.core :refer [reg-sub subscribe]]
+            [date-format.logic :refer [guesstimate]]))
 
-(re-frame/reg-sub
- :name
+(reg-sub
+ :template
  (fn [db]
-   (:name db)))
+   (:template db)))
+
+(reg-sub
+ :presets
+ (fn [db]
+   (:presets db)))
+
+(reg-sub
+ :format
+ (fn [query-v _]
+   (subscribe [:template]))
+ (fn [template query-v _]
+   (guesstimate template)))
