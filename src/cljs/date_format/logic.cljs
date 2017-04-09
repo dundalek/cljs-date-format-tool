@@ -30,5 +30,3 @@
      (if (empty? s)
         (apply str (twelve-hour-heuristic res))
         (recur (find-match s res)))))
-
-; (guesstimate "03.02.1994 07:08")
