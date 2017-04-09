@@ -2,7 +2,7 @@
     (:require [re-frame.core :refer [subscribe dispatch]]))
 
 (defn render-option [option checked]
-  [:div {:key option}
+  [:div.radio {:key option}
     [:label
       [:input {:type "radio" :checked checked :on-change #(dispatch [:set-template option])}]
       " "
@@ -22,7 +22,11 @@
           [:p
             "This tool lets you create date formatting strings for "
             [:a {:href "http://momentjs.com/docs/#/displaying/"} "Moment.js"]
-            " using a natural example instead of looking up placeholder characters in a documentation."]
+            " using a natural example instead of looking up placeholder characters in a documentation."
+            [:br]
+            "Check out the "
+            [:a {:href "https://github.com/dundalek/cljs-date-format-tool"} "source code"]
+            "."]
           [:div.panel.panel-default
             [:div.panel-heading "Example date"]
             [:div.panel-body

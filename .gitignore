@@ -4,3 +4,4 @@
 /resources/public/js/compiled
 out
 node_modules
+.lein-repl-history
