@@ -13,9 +13,9 @@
  (fn [db]
    (:presets db)))
 
-(reg-sub
- :format
- (fn [query-v _]
-   (subscribe [:template]))
- (fn [template query-v _]
-   (guesstimate template)))
+; (reg-sub
+;  :format
+;  (fn [query-v _]
+;    (subscribe [:template]))
+;  (fn [template query-v _]
+;    (guesstimate template)))
