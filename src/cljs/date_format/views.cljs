@@ -30,7 +30,7 @@
           [:div.panel.panel-default
             [:div.panel-heading "Example date"]
             [:div.panel-body
-              "Monday 3rd of February 1994"
+              "Thursday 3rd of February 1994"
               [:br]
               "7 hours 8 minutes 9.006 seconds in the morning"
               [:br]
