@@ -38,7 +38,7 @@ function closureFormat(date, fmt) {
 const execSync = require('child_process').execSync;
 
 // man date | sed -n 's/^\s*\(%[a-zA-Z]\).*$/\1/p'
-const unixDateSymbols = _('%a %A %b %B %c %C %d %D %e %F %g %G %h %H %I %j %k %l %m %M %n %N %p %P %r %R %s %S %t %T %u %U %V %w %W %x %X %y %Y %z %Z %-H %%'.split(' '))
+const unixDateSymbols = _('%a %A %b %B %c %C %d %D %e %F %g %G %h %H %I %j %k %l %m %M %n %N %p %P %r %R %s %S %t %T %u %U %V %w %W %x %X %y %Y %z %Z %-H %-M %-S %%'.split(' '))
   .difference('%u %k %l %g %G %b %n %t %U %W %r %I'.split(' '))
   .value();
 // TODO: handle 12hour formats %I %r
