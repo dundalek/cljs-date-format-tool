@@ -29,6 +29,20 @@ function closureFormat(date, fmt) {
   return (new goog.i18n.DateTimeFormat(fmt)).format(date, closureTz);
 }
 
+/* ==== unix date ==== */
+
+const execSync = require('child_process').execSync;
+
+// man date | sed -n 's/^\s*\(%[a-zA-Z]\).*$/\1/p'
+const unixDateSymbols = _('%a %A %b %B %c %C %d %D %e %F %g %G %h %H %I %j %k %l %m %M %n %N %p %P %r %R %s %S %t %T %u %U %V %w %W %x %X %y %Y %z %Z %-H %%'.split(' '))
+  .difference('%u %k %l %g %G %b %n %t %U %W %r %I'.split(' '))
+  .value();
+// TODO: handle 12hour formats %I %r
+
+function unixDateFormat(date, fmt) {
+  return execSync(`LC_ALL=en_US.utf-8 date -u -d "${date.toISOString()}" "+${fmt}"`, {encoding: 'utf-8'}).trim();
+}
+
 /* ====  generic fns ==== */
 
 

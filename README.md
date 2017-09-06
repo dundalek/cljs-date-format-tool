@@ -1,6 +1,10 @@
 # Date Format Tool
 
-This tool lets you create date formatting strings for [Moment.js](http://momentjs.com/docs/#/displaying/) using a natural example instead of looking up placeholder characters in a documentation.
+This tool lets you create date formatting strings for various systems using a natural example instead of looking up placeholder characters in a documentation. These formats are supported:
+
+- [Moment.js](http://momentjs.com/docs/#/displaying/)
+- [Google Closure Library](https://google.github.io/closure-library/api/goog.i18n.DateTimeFormat.html)
+- [Unix date](https://linux.die.net/man/1/date)
 
 It is written in ClojureScript using [re-frame](https://github.com/Day8/re-frame).
 

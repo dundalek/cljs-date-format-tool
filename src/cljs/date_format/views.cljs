@@ -1,6 +1,6 @@
 (ns date-format.views
     (:require [re-frame.core :refer [subscribe dispatch]]
-              [date-format.logic :refer [guesstimate moment-formats closure-formats]]))
+              [date-format.logic :refer [guesstimate moment-formats closure-formats unix-date-formats]]))
 
 (defn render-option [option checked]
   [:div.radio {:key option}
@@ -46,4 +46,7 @@
               [:pre (guesstimate @template moment-formats)]
               [:br]
               [:p [:a {:href "https://google.github.io/closure-library/api/goog.i18n.DateTimeFormat.html"} "Google Closure Library"]]
-              [:pre (guesstimate @template closure-formats)]]]]])))
+              [:pre (guesstimate @template closure-formats)]
+              [:br]
+              [:p [:a {:href "https://linux.die.net/man/1/date"} "Unix date"]]
+              [:pre (guesstimate @template unix-date-formats)]]]]])))
