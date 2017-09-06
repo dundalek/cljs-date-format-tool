@@ -4,10 +4,12 @@ const edn = require('jsedn')
 /* ==== moment.js ==== */
 
 const moment = require('moment')
+
 // http://momentjs.com/docs/#/displaying/
 // copy(JSON.stringify([].map.call($0.querySelectorAll('tr > td:nth-child(2)'), (el) => el.textContent)))
-let momentSymbols = "M Mo MM MMM MMMM Q Qo D Do DD DDD DDDo DDDD d do dd ddd dddd e E w wo ww W Wo WW YY YYYY Y gg gggg GG GGGG A a H HH h hh k kk m mm s ss S SS SSS SSSS SSSSS SSSSSS SSSSSSS SSSSSSSS SSSSSSSSS z or zz Z ZZ X x".split(' ')
-momentSymbols = _.difference(momentSymbols, ['e', 'E', 'GG', 'GGGG', 'gg', 'gggg', 'Y', 'z', 'zz']);
+const momentSymbols = _("M Mo MM MMM MMMM Q Qo D Do DD DDD DDDo DDDD d do dd ddd dddd e E w wo ww W Wo WW YY YYYY Y gg gggg GG GGGG A a H HH h hh k kk m mm s ss S SS SSS SSSS SSSSS SSSSSS SSSSSSS SSSSSSSS SSSSSSSSS z or zz Z ZZ X x".split(' '))
+  .difference(['e', 'E', 'GG', 'GGGG', 'gg', 'gggg', 'Y', 'z', 'zz'])
+  .value();
 
 function momentFormat(date, fmt) {
   return moment(date).format(fmt);
@@ -21,8 +23,10 @@ goog.require('goog.i18n.TimeZone');
 
 // http://userguide.icu-project.org/formatparse/datetime
 // copy([].map.call($0.querySelectorAll('tr > td:nth-child(3)'), (el) => el.textContent).join(' ').replace(/,|or|'/g, ' ').replace(/\s+/g, ' '))
-let closureSymbols = _('G GG GGG GGGG GGGGG yy y yyyy Y u U r Q QQ QQQ QQQQ QQQQQ q qq qqq qqqq qqqqq M MM MMM MMMM MMMMM L LL LLL LLLL LLLLL w ww W d dd D F g E EE EEE EEEE EEEEE EEEEEE e ee eee eeee eeeee eeeeee c cc ccc cccc ccccc cccccc a H HH h hh k kk K KK m mm s ss S SS SSS SSSS A z zz zzz zzzz Z ZZ ZZZ ZZZZ ZZZZZ O OOOO v vvvv V VV VVV VVVV X XX XXX XXXX XXXXX x xx xxx xxxx xxxxx').split(' ').value();
-closureSymbols = _.difference(closureSymbols, 'GG GGG yyyy EE EEE ee cc cccccc zz zzz ZZ ZZZ k kk K KK'.split(' '));
+let closureSymbols = _('G GG GGG GGGG GGGGG yy y yyyy Y u U r Q QQ QQQ QQQQ QQQQQ q qq qqq qqqq qqqqq M MM MMM MMMM MMMMM L LL LLL LLLL LLLLL w ww W d dd D F g E EE EEE EEEE EEEEE EEEEEE e ee eee eeee eeeee eeeeee c cc ccc cccc ccccc cccccc a H HH h hh k kk K KK m mm s ss S SS SSS SSSS A z zz zzz zzzz Z ZZ ZZZ ZZZZ ZZZZZ O OOOO v vvvv V VV VVV VVVV X XX XXX XXXX XXXXX x xx xxx xxxx xxxxx'.split(' '))
+  .difference('GG GGG yyyy EE EEE ee cc cccccc zz zzz ZZ ZZZ k kk K KK'.split(' '))
+  .value();
+
 const closureTz = goog.i18n.TimeZone.createTimeZone(0);
 
 function closureFormat(date, fmt) {
@@ -45,20 +49,23 @@ function unixDateFormat(date, fmt) {
 
 /* ====  generic fns ==== */
 
+function generateFormatTable(symbols, fmtFn, d) {
+  return _(unixDateSymbols)
+    .map(key => ({ key, val: fmtFn(d, key) }))
+    .filter(({ key, val }) => key !== val)
+    .groupBy('val')
+    // .filter(val => val.length > 1)
+    .map(x => x[0])
+    .orderBy(x => -x.val.length)
+    .value();
+}
 
 const d = new Date('1994-02-03T07:08:09.006')
-const fmtFn = closureFormat;
+// const fmts = generateFormatTable(momentSymbols, momentFormat, d);
+// const fmts = generateFormatTable(closureSymbols, closureFormat, d);
+const fmts = generateFormatTable(unixDateSymbols, unixDateFormat, d);
 
-let fmts = _(closureSymbols)
-  .map(key => ({ key, val: fmtFn(d, key) }))
-  .filter(({ key, val }) => key !== val)
-  .groupBy('val')
-  // .filter(val => val.length > 1)
-  .map(x => x[0])
-  .orderBy(x => -x.val.length)
-  .value()
-
-// console.log(fmts)
+console.log(fmts)
 console.log(edn.encode(fmts))
 
 
